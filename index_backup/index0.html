@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sethu S — Data Science Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════════════════════════════
+   RESET
+════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:#070b14;
+  color:#dde2f0;
+  font-family:'Outfit',sans-serif;
+  font-weight:400;
+  overflow-x:hidden;
+  line-height:1.75;
+}
+
+/* ════════════════════════════════════════════════════════
+   CSS VARIABLES
+════════════════════════════════════════════════════════ */
+:root{
+  --bg:        #070b14;
+  --bg2:       #0b1120;
+  --surface:   #0e1525;
+  --card:      #111828;
+  --card2:     #141e30;
+  --border:    #1e2d45;
+  --border2:   #263550;
+  --accent:    #38bdf8;   /* sky blue */
+  --accent-g:  #34d399;   /* emerald  */
+  --accent-p:  #a78bfa;   /* violet   */
+  --accent-o:  #fb923c;   /* orange   */
+  --accent-r:  #f87171;   /* red      */
+  --accent-y:  #fbbf24;   /* amber    */
+  --text:      #e2e8f8;
+  --muted:     #8896b0;
+  --dim:       #475872;
+  --sidebar-w: 265px;
+
+  /* glow colours matching accent */
+  --glow-blue:  rgba(56,189,248,0.18);
+  --glow-green: rgba(52,211,153,0.18);
+  --glow-violet:rgba(167,139,250,0.18);
+}
+
+/* ════════════════════════════════════════════════════════
+   BACKGROUND GRID + GLOW
+════════════════════════════════════════════════════════ */
+body::after{
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(56,189,248,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(167,139,250,0.06) 0%, transparent 60%);
+}
+body::before{
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+
+/* ════════════════════════════════════════════════════════
+   SCROLLBAR
+════════════════════════════════════════════════════════ */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+
+/* ════════════════════════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════════════════════════ */
+#sidebar{
+  position:fixed;top:0;left:0;bottom:0;
+  width:var(--sidebar-w);
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  z-index:100;overflow-y:auto;
+}
+.sb-brand{
+  padding:2rem 1.5rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(56,189,248,0.05) 0%,transparent 100%);
+}
+.sb-label{
+  font-family:'Space Mono',monospace;
+  font-size:0.52rem;letter-spacing:0.25em;color:var(--dim);
+  text-transform:uppercase;margin-bottom:0.4rem;
+}
+.sb-name{
+  font-family:'Syne',sans-serif;
+  font-size:1.3rem;font-weight:800;color:var(--text);
+  line-height:1.1;margin-bottom:0.3rem;
+  letter-spacing:-0.01em;
+}
+.sb-role{
+  font-family:'Space Mono',monospace;
+  font-size:0.68rem;color:var(--accent);
+  line-height:1.5;
+}
+.sb-nav-label{
+  font-family:'Space Mono',monospace;
+  font-size:0.52rem;letter-spacing:0.25em;
+  color:var(--dim);text-transform:uppercase;
+  padding:1rem 1.5rem 0.4rem;
+}
+nav a{
+  display:flex;align-items:center;gap:0.7rem;
+  font-family:'Space Mono',monospace;
+  font-size:0.74rem;letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  padding:0.55rem 1.5rem;
+  border-left:2px solid transparent;
+  transition:all 0.22s ease;
+  position:relative;
+}
+nav a .nav-num{
+  font-size:0.5rem;color:var(--dim);
+  letter-spacing:0.05em;
+  min-width:18px;
+}
+nav a:hover,nav a.active{
+  color:var(--accent);
+  border-left-color:var(--accent);
+  background:rgba(56,189,248,0.06);
+}
+nav a.active .nav-num{color:var(--accent)}
+.sb-footer{
+  margin-top:auto;
+  padding:1rem 1.5rem;
+  border-top:1px solid var(--border);
+  font-family:'Space Mono',monospace;
+  font-size:0.52rem;color:var(--dim);
+}
+
+/* ════════════════════════════════════════════════════════
+   MAIN LAYOUT
+════════════════════════════════════════════════════════ */
+#main{
+  margin-left:var(--sidebar-w);
+  padding:3rem 3.5rem 5rem;
+  position:relative;z-index:1;
+}
+
+/* ════════════════════════════════════════════════════════
+   SECTION HEADERS
+════════════════════════════════════════════════════════ */
+.section{margin-bottom:5rem;scroll-margin-top:2rem}
+.sec-head{margin-bottom:2.2rem}
+.sec-head-inner{
+  display:flex;align-items:center;gap:1rem;margin-bottom:0.6rem;
+}
+.sec-num{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;color:var(--accent);
+  letter-spacing:0.15em;
+}
+.sec-head h2{
+  font-family:'Syne',sans-serif;
+  font-size:2.5rem;font-weight:800;
+  color:var(--text);letter-spacing:-0.025em;line-height:1;
+}
+.sec-rule{
+  height:1px;
+  background:linear-gradient(90deg,var(--accent) 0%,var(--border2) 40%,transparent 100%);
+}
+
+/* ════════════════════════════════════════════════════════
+   CARDS
+════════════════════════════════════════════════════════ */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.8rem;
+  margin-bottom:1.2rem;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--accent),transparent);
+  opacity:0.3;
+}
+
+/* ════════════════════════════════════════════════════════
+   ABOUT
+════════════════════════════════════════════════════════ */
+.about-grid{
+  display:grid;
+  grid-template-columns:230px 1fr;
+  gap:3.5rem;align-items:start;
+}
+.pimg-wrap{
+  display:flex;flex-direction:column;
+  align-items:center;gap:1.1rem;
+}
+.pimg-wrap img{
+  width:190px;height:190px;
+  border-radius:50%;object-fit:cover;
+  border:2px solid var(--accent);
+  box-shadow:0 0 0 6px rgba(56,189,248,0.08), 0 0 40px rgba(56,189,248,0.18);
+}
+.dl-btn{
+  display:block;width:100%;text-align:center;
+  font-family:'Space Mono',monospace;
+  font-size:0.66rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--accent);
+  border-radius:4px;padding:0.6rem 1rem;
+  text-decoration:none;transition:all 0.25s;
+}
+.dl-btn:hover{
+  background:var(--accent);color:var(--bg);
+  box-shadow:0 0 20px var(--glow-blue);
+}
+.clinks{display:flex;flex-direction:column;gap:0.45rem;width:100%}
+.clinks a{
+  display:flex;align-items:center;gap:0.5rem;
+  font-family:'Space Mono',monospace;
+  font-size:0.62rem;color:var(--muted);
+  text-decoration:none;
+  transition:color 0.2s;
+  white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.clinks a:hover{color:var(--accent)}
+.clinks a .ci{color:var(--accent);min-width:14px}
+.cloc{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;color:var(--dim);
+  margin-top:0.3rem;line-height:1.8;
+}
+.abt-name{
+  font-family:'Syne',sans-serif;
+  font-size:3.2rem;font-weight:800;color:var(--text);
+  letter-spacing:-0.03em;line-height:1.05;margin-bottom:0.4rem;
+}
+.abt-role{
+  font-family:'Space Mono',monospace;
+  font-size:0.8rem;color:var(--accent);
+  letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:1.6rem;
+}
+.stat-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0.9rem;margin-bottom:1.7rem;
+}
+.stat-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:6px;padding:1rem;text-align:center;
+  transition:border-color 0.2s;
+}
+.stat-box:hover{border-color:var(--accent)}
+.stat-val{
+  font-family:'Syne',sans-serif;
+  font-size:2.2rem;font-weight:800;line-height:1;margin-bottom:0.25rem;
+}
+.stat-lbl{
+  font-family:'Space Mono',monospace;
+  font-size:0.55rem;color:var(--muted);
+  letter-spacing:0.1em;text-transform:uppercase;
+}
+.bio-box{
+  background:linear-gradient(135deg,rgba(56,189,248,0.04) 0%,rgba(56,189,248,0.01) 100%);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;
+  padding:1.4rem 1.6rem;
+}
+.bio-box p{
+  font-size:1.02rem;line-height:1.9;
+  color:#c8d0e8;text-align:justify;
+}
+
+/* ════════════════════════════════════════════════════════
+   SUB LABELS & META
+════════════════════════════════════════════════════════ */
+.sub-label{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.18em;
+  text-transform:uppercase;
+  border-left:2px solid var(--accent);
+  padding-left:0.6rem;
+  margin:1.4rem 0 0.7rem;
+  color:var(--accent);
+}
+.meta-row{
+  display:flex;justify-content:space-between;
+  align-items:center;margin-bottom:0.9rem;
+  flex-wrap:wrap;gap:0.3rem;
+}
+.meta-l{
+  font-family:'Space Mono',monospace;
+  font-size:0.72rem;color:var(--muted);
+}
+.meta-r{
+  font-family:'Space Mono',monospace;
+  font-size:0.72rem;color:var(--accent);
+}
+.exp-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  margin-bottom:0.4rem;
+}
+.exp-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--accent-g);
+  box-shadow:0 0 8px var(--accent-g);
+}
+.exp-live{
+  font-family:'Space Mono',monospace;
+  font-size:0.58rem;color:var(--accent-g);
+  letter-spacing:0.15em;text-transform:uppercase;
+}
+.card-title{
+  font-family:'Syne',sans-serif;
+  font-size:1.65rem;font-weight:700;color:var(--text);
+  letter-spacing:-0.01em;margin-bottom:0.15rem;
+}
+
+/* ════════════════════════════════════════════════════════
+   BULLET LIST
+════════════════════════════════════════════════════════ */
+.blist{list-style:none;display:flex;flex-direction:column;gap:0.65rem}
+.blist li{
+  display:flex;gap:0.75rem;
+  font-size:1rem;line-height:1.85;color:#c0c8de;
+}
+.blist li::before{
+  content:'▸';color:var(--accent);
+  flex-shrink:0;margin-top:3px;font-size:0.85rem;
+}
+
+/* ════════════════════════════════════════════════════════
+   TAGS
+════════════════════════════════════════════════════════ */
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:0.3rem}
+.tag{
+  display:inline-block;
+  font-family:'Space Mono',monospace;
+  font-size:0.67rem;letter-spacing:0.06em;text-transform:uppercase;
+  border-radius:3px;padding:3px 10px;border:1px solid;
+  transition:all 0.2s;cursor:default;
+}
+.tag:hover{filter:brightness(1.3)}
+
+/* ════════════════════════════════════════════════════════
+   SKILLS — GROUPED
+════════════════════════════════════════════════════════ */
+.skills-wrap{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;padding:2rem;
+  position:relative;overflow:hidden;
+}
+.skills-wrap::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-p),transparent);
+  opacity:0.4;
+}
+.skill-group{margin-bottom:1.8rem}
+.skill-group:last-child{margin-bottom:0}
+.sg-header{
+  display:flex;align-items:center;gap:0.7rem;margin-bottom:0.7rem;
+}
+.sg-icon{font-size:1rem}
+.sg-title{
+  font-family:'Syne',sans-serif;
+  font-size:0.95rem;font-weight:700;color:var(--text);
+  letter-spacing:0.01em;
+}
+.sg-rule{flex:1;height:1px;background:var(--border2)}
+
+/* ════════════════════════════════════════════════════════
+   EDUCATION
+════════════════════════════════════════════════════════ */
+.edu-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;
+}
+.edu-type{
+  font-family:'Space Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.18em;
+  text-transform:uppercase;margin-bottom:0.4rem;
+}
+.edu-deg{
+  font-family:'Syne',sans-serif;
+  font-size:1.55rem;font-weight:700;color:var(--text);
+  margin-bottom:0.1rem;
+}
+.edu-uni{font-size:0.98rem;color:var(--muted);margin-bottom:0.5rem}
+.cgpa-chip{
+  display:inline-flex;align-items:baseline;gap:0.4rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:4px;padding:0.4rem 0.9rem;margin-bottom:1rem;
+}
+.cgpa-lbl{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;
+}
+.cgpa-val{
+  font-family:'Syne',sans-serif;
+  font-size:1.6rem;font-weight:800;line-height:1;
+}
+.cgpa-denom{font-size:0.8rem;color:var(--dim)}
+
+/* ════════════════════════════════════════════════════════
+   PROJECTS
+════════════════════════════════════════════════════════ */
+.proj-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.8rem;
+  margin-bottom:1.1rem;
+  transition:border-color 0.25s;
+}
+.proj-card:hover{border-color:var(--border2)}
+.proj-header{
+  display:flex;align-items:center;gap:0.9rem;margin-bottom:0.25rem;
+}
+.proj-num{
+  font-family:'Space Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.2em;color:var(--dim);
+  min-width:22px;
+}
+.proj-bar{height:1px;width:28px;flex-shrink:0}
+.proj-title{
+  font-family:'Syne',sans-serif;
+  font-size:1.35rem;font-weight:700;color:var(--text);
+}
+.proj-sub{
+  font-size:0.95rem;color:var(--muted);
+  margin:0.1rem 0 0.65rem 2.5rem;
+}
+.proj-img{
+  width:100%;border-radius:5px;object-fit:cover;
+  max-height:320px;
+  border:1px solid var(--border);
+  margin-bottom:0.9rem;
+}
+.toggle-btn{
+  background:transparent;
+  border:1px solid var(--border2);border-radius:4px;
+  color:var(--muted);
+  font-family:'Space Mono',monospace;
+  font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.45rem 1rem;cursor:pointer;
+  transition:all 0.2s;
+  display:inline-flex;align-items:center;gap:0.5rem;
+  margin-bottom:0.6rem;
+}
+.toggle-btn:hover{border-color:var(--accent);color:var(--accent)}
+.proj-arrow{transition:transform 0.25s;display:inline-block}
+.proj-details{display:none;margin-top:0.6rem;animation:fadeIn 0.25s ease}
+.proj-details.open{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.thin-hr{height:1px;background:var(--border);margin:1rem 0}
+.ts-lbl{
+  font-family:'Space Mono',monospace;
+  font-size:0.57rem;color:var(--dim);
+  letter-spacing:0.15em;text-transform:uppercase;
+  margin:0.6rem 0 0.3rem;
+}
+.gh-btn{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  font-family:'Space Mono',monospace;
+  font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);
+  border:1px solid var(--border2);border-radius:4px;
+  padding:0.42rem 0.9rem;text-decoration:none;
+  transition:all 0.22s;margin-top:0.8rem;
+}
+.gh-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+.pbi-wrap{
+  border-radius:6px;overflow:hidden;
+  border:1px solid var(--border);margin-top:0.6rem;
+}
+
+/* ════════════════════════════════════════════════════════
+   CERTIFICATIONS
+════════════════════════════════════════════════════════ */
+.cert-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0.65rem;
+}
+.cert-grid img{
+  width:100%;border-radius:4px;
+  border:1px solid var(--border);
+  transition:transform 0.22s,border-color 0.22s,box-shadow 0.22s;
+  cursor:pointer;display:block;
+}
+.cert-grid img:hover{
+  transform:scale(1.04);
+  border-color:var(--accent);
+  box-shadow:0 4px 20px rgba(56,189,248,0.15);
+}
+
+/* ════════════════════════════════════════════════════════
+   CONTACT
+════════════════════════════════════════════════════════ */
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;
+}
+.clist{list-style:none}
+.clist li a{
+  display:flex;align-items:center;gap:0.9rem;
+  padding:0.72rem 0;
+  border-bottom:1px solid var(--border);
+  text-decoration:none;transition:opacity 0.2s;
+}
+.clist li a:hover{opacity:0.72}
+.clist-icon{
+  font-size:0.85rem;color:var(--accent);
+  width:20px;text-align:center;flex-shrink:0;
+}
+.clist-type{
+  font-family:'Space Mono',monospace;
+  font-size:0.56rem;color:var(--dim);
+  text-transform:uppercase;letter-spacing:0.14em;
+}
+.clist-val{font-size:0.93rem;color:#b0bad0}
+.c-loc{
+  font-family:'Space Mono',monospace;
+  font-size:0.65rem;color:var(--dim);
+  margin-top:0.9rem;line-height:1.9;
+}
+.resume-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:1.8rem;
+  display:flex;flex-direction:column;gap:1rem;
+}
+.resume-card p{font-size:1rem;color:var(--muted);line-height:1.8}
+
+/* ════════════════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════════════════ */
+footer{
+  border-top:1px solid var(--border);
+  padding:1.8rem 0 0;text-align:center;
+  font-family:'Space Mono',monospace;
+  font-size:0.58rem;color:var(--dim);
+  letter-spacing:0.1em;
+}
+
+/* ════════════════════════════════════════════════════════
+   MOBILE
+════════════════════════════════════════════════════════ */
+#mob-toggle{
+  display:none;
+  position:fixed;top:1rem;left:1rem;z-index:200;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:4px;color:var(--muted);
+  font-size:1.1rem;padding:0.35rem 0.65rem;cursor:pointer;
+}
+@media(max-width:960px){
+  #sidebar{transform:translateX(-100%);transition:transform 0.3s ease}
+  #sidebar.open{transform:translateX(0)}
+  #main{margin-left:0;padding:1.5rem 1.3rem 3rem}
+  #mob-toggle{display:block}
+  .about-grid{grid-template-columns:1fr;gap:2rem}
+  .edu-grid{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:repeat(3,1fr)}
+  .cert-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:1fr}
+  .abt-name{font-size:2.3rem}
+  #main{padding-top:4rem}
+}
+@media(max-width:500px){
+  .cert-grid{grid-template-columns:repeat(2,1fr)}
+  .proj-title{font-size:1.1rem}
+}
+</style>
+</head>
+<body>
+
+<button id="mob-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+
+<!-- ═══════════════════ SIDEBAR ═══════════════════════════ -->
+<aside id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-label">Portfolio</div>
+    <div class="sb-name">Sethu S</div>
+    <div class="sb-role">Data Scientist<br>AI/ML Engineer · Statistician</div>
+  </div>
+  <div class="sb-nav-label">Navigate</div>
+  <nav>
+    <a href="#about"          class="nav-link active"><span class="nav-num">01</span>About</a>
+    <a href="#experience"     class="nav-link"><span class="nav-num">02</span>Experience</a>
+    <a href="#education"      class="nav-link"><span class="nav-num">03</span>Education</a>
+    <a href="#skills"         class="nav-link"><span class="nav-num">04</span>Skills</a>
+    <a href="#projects"       class="nav-link"><span class="nav-num">05</span>Projects</a>
+    <a href="#certifications" class="nav-link"><span class="nav-num">06</span>Certifications</a>
+    <a href="#contact"        class="nav-link"><span class="nav-num">07</span>Contact</a>
+  </nav>
+  <div class="sb-footer">© 2026 Sethu S · Portfolio</div>
+</aside>
+
+<!-- ═══════════════════ MAIN ══════════════════════════════ -->
+<main id="main">
+
+<!-- ──────────────── ABOUT ──────────────────────────────── -->
+<section class="section" id="about">
+  <div class="sec-head">
+    <div class="sec-head-inner">
+      <span class="sec-num">01 /</span>
+      <h2>About</h2>
+    </div>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div class="about-grid">
+    <div class="pimg-wrap">
+      <img src="pictures/111.png" alt="Sethu S"/>
+      <a class="dl-btn" href="resume/res.pdf" download="Sethu_S_Data_Scientist_resume.pdf">↓ &nbsp;Download Resume</a>
+      <div class="clinks">
+        <a href="mailto:sethus4791@gmail.com"><span class="ci">✉</span>sethus4791@gmail.com</a>
+        <a href="https://www.linkedin.com/in/sethus4791" target="_blank"><span class="ci">in</span>linkedin.com/in/sethus4791</a>
+        <a href="https://github.com/itsmesethus" target="_blank"><span class="ci">⌥</span>github.com/itsmesethus</a>
+        <a href="https://www.kaggle.com/sethu123123" target="_blank"><span class="ci">◈</span>kaggle.com/sethu123123</a>
+        <a href="https://www.coursera.org/learner/sethus4791" target="_blank"><span class="ci">◉</span>Coursera Profile</a>
+        <a href="https://www.credly.com/users/sethu4791" target="_blank"><span class="ci">◎</span>Credly Profile</a>
+        <p class="cloc">📍 Villupuram, Tamil Nadu-605103<br>☏ +91-8122815260</p>
+      </div>
+    </div>
+
+    <div>
+      <h1 class="abt-name">Sethu S</h1>
+      <p class="abt-role">Data Scientist &nbsp;·&nbsp; Statistician &nbsp;·&nbsp; AI/ML Engineer</p>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-val" style="color:var(--accent)">3+</div><div class="stat-lbl">Years Exp.</div></div>
+        <div class="stat-box"><div class="stat-val" style="color:var(--accent-g)">6+</div><div class="stat-lbl">Projects</div></div>
+        <div class="stat-box"><div class="stat-val" style="color:var(--accent-p)">30+</div><div class="stat-lbl">Certifications</div></div>
+      </div>
+      <div class="bio-box">
+        <p>I am a Statistics graduate and Data Scientist with 3 years of professional experience delivering statistically robust and scalable analytics solutions in large-scale data environments. Currently working as an AI/ML Engineer at Nielsen, I contribute to the development and validation of high-precision audience measurement and weighting methodologies that support national television analytics and decision systems. My work involves designing and optimizing data pipelines, implementing advanced statistical techniques, and working with large datasets using Python, PySpark, and SQL. I play a key role in maintaining data integrity and methodological accuracy while supporting industry regulatory audits, including Media Rating Council (MRC) reviews conducted by Ernst &amp; Young (EY). This experience has strengthened my ability to build reliable, transparent, and production-ready analytical systems. With a strong foundation in statistics and machine learning, I specialize in translating complex analytical concepts into scalable data solutions — passionate about leveraging data science to extract meaningful insights and enable organizations to make informed, data-driven decisions at scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────── EXPERIENCE ─────────────────────────── -->
+<section class="section" id="experience">
+  <div class="sec-head">
+    <div class="sec-head-inner"><span class="sec-num">02 /</span><h2>Experience</h2></div>
+    <div class="sec-rule"></div>
+  </div>
+
+  <div class="card">
+    <div class="exp-badge"><div class="exp-dot"></div><span class="exp-live">Current Role</span></div>
+    <div class="card-title">Nielsen — AI/ML Engineer</div>
+    <div class="meta-row">
+      <span class="meta-l">Bangalore, India</span>
+      <span class="meta-r">July 2024 – Present</span>
+    </div>
+    <div class="sub-label">Key Responsibilities</div>
+    <ul class="blist">
+      <li>Spearheaded the 2025-2026 US TV Annual Weighting Control Review by updating and validating complex PySpark &amp; SQL code and revising decision logic for next-year weighting stages, providing critical implementation guidelines for 6+ downstream teams to ensure methodological compliance for the National TV ratings.</li>
+      <li>Led end-to-end technical walkthroughs for Media Rating Council (MRC) audits conducted by Ernst &amp; Young (EY); provided deep-dive code explanations and methodological transitions for weighting pipelines, resulting in zero follow-ups and findings.</li>
+      <li>Executed the "Media Landscape Project (Presence of Attributes)" by transitioning theoretical research into functional code prototypes using Python for the 2 weighting pipelines (NPM &amp; Big Data + Panel) and collaborated across teams to deliver methodology enhancements results to the MRC.</li>
+      <li>Optimized 4 critical weighting engines (NPM, Big Data + Panel, OOH &amp; OOHx), maintaining high-precision audience estimation for National TV ratings and earning a 2025 Silver Award for technical excellence during MRC audits.</li>
+      <li>Enhanced 3-step quality framework (Installed, Intab, and HUT) to automate data exclusion thresholds; collaborated with engineering teams to integrate these validation gates into the production Intab select.</li>
+      <li>Validated the Time Period Rating Engine through Full Sample UAT, detecting and resolving critical Universal Estimates (UE) discrepancies; supported Custom Vizio-Roku Weighting process and executed high-impact ad-hoc technical audits to satisfy complex client requirements.</li>
+    </ul>
+    <div class="sub-label">Tools &amp; Skills</div>
+    <div class="tags" id="tags-nielsen"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Evoscien Pvt Ltd — Statistician</div>
+    <div class="meta-row">
+      <span class="meta-l">Bangalore, India</span>
+      <span class="meta-r" style="color:var(--accent-p)">May 2023 – June 2024</span>
+    </div>
+    <div class="sub-label" style="border-color:var(--accent-p);color:var(--accent-p)">Key Responsibilities</div>
+    <ul class="blist">
+      <li>Managed and preprocessed large datasets obtained from the Entomology research team, ensuring data integrity and suitability for further statistical analysis.</li>
+      <li>Designed and implemented statistical models, algorithms, and techniques, extracting insights that led to a 15% improvement in decision-making processes.</li>
+      <li>Conducted appropriate statistical tests (t-tests, ANOVA, chi-square tests, and non-parametric tests) to analyze data and identified meaningful patterns, trends, and relationships with a 95% confidence interval.</li>
+      <li>Collaborated with Entomology and Engineering with data-driven approaches, resulting in improved operational efficiency by 15%.</li>
+      <li>Created 20+ detailed reports and interactive data visualizations, effectively communicating analytical findings to both technical and non-technical audiences.</li>
+      <li>Continuously stayed updated with new developments and trends in statistical analysis and software packages.</li>
+    </ul>
+    <div class="sub-label" style="border-color:var(--accent-p);color:var(--accent-p)">Tools &amp; Skills</div>
+    <div class="tags" id="tags-evoscien"></div>
+  </div>
+</section>
+
+<!-- ──────────────── EDUCATION ───────────────────────────── -->
+<section class="section" id="education">
+  <div class="sec-head">
+    <div class="sec-head-inner"><span class="sec-num">03 /</span><h2>Education</h2></div>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="edu-grid">
+    <div class="card">
+      <div class="edu-type" style="color:var(--accent)">Postgraduate</div>
+      <div class="edu-deg">M.Sc Statistics</div>
+      <div class="edu-uni">Bharathiar University</div>
+      <div class="meta-row"><span class="meta-l">Coimbatore, Tamil Nadu</span><span class="meta-r">2021 – 2023</span></div>
+      <div class="cgpa-chip" style="border-color:rgba(56,189,248,0.25)">
+        <span class="cgpa-lbl">CGPA</span>
+        <span class="cgpa-val" style="color:var(--accent)">8.61<span class="cgpa-denom"> / 10</span></span>
+      </div>
+      <div class="sub-label">Relevant Coursework</div>
+      <div class="tags" id="tags-msc"></div>
+    </div>
+    <div class="card">
+      <div class="edu-type" style="color:var(--accent-p)">Undergraduate</div>
+      <div class="edu-deg">B.Sc Statistics</div>
+      <div class="edu-uni">Arignar Anna Govt Arts College</div>
+      <div class="meta-row"><span class="meta-l">Villupuram, Tamil Nadu</span><span class="meta-r" style="color:var(--accent-p)">2018 – 2021</span></div>
+      <div class="cgpa-chip" style="border-color:rgba(167,139,250,0.25)">
+        <span class="cgpa-lbl">CGPA</span>
+        <span class="cgpa-val" style="color:var(--accent-p)">9.39<span class="cgpa-denom"> / 10</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────── SKILLS ──────────────────────────────── -->
+<section class="section" id="skills">
+  <div class="sec-head">
+    <div class="sec-head-inner"><span class="sec-num">04 /</span><h2>Skills</h2></div>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="skills-wrap" id="skills-container"></div>
+</section>
+
+<!-- ──────────────── PROJECTS ────────────────────────────── -->
+<section class="section" id="projects">
+  <div class="sec-head">
+    <div class="sec-head-inner"><span class="sec-num">05 /</span><h2>Projects</h2></div>
+    <div class="sec-rule"></div>
+  </div>
+  <div id="projects-container"></div>
+</section>
+
+<!-- ──────────────── CERTIFICATIONS ─────────────────────── -->
+<section class="section" id="certifications">
+  <div class="sec-head">
+    <div class="sec-head-inner"><span class="sec-num">06 /</span><h2>Certifications</h2></div>
+    <div class="sec-rule"></div>
+  </div>
+  <p style="font-size:1rem;color:var(--muted);margin-bottom:1.3rem;line-height:1.75;">
+    Certifications earned across data science, ML, statistics, and analytics domains.
+  </p>
+  <div class="cert-grid" id="cert-grid"></div>
+</section>
+
+<!-- ──────────────── CONTACT ─────────────────────────────── -->
+<section class="section" id="contact">
+  <div class="sec-head">
+    <div class="sec-head-inner"><span class="sec-num">07 /</span><h2>Contact</h2></div>
+    <div class="sec-rule"></div>
+  </div>
+  <p style="font-size:1.05rem;color:var(--muted);max-width:600px;line-height:1.85;margin-bottom:1.8rem;">
+    Feel free to reach out for collaborations, opportunities, or just to connect. I'm always open to discussing data science, AI/ML engineering, and analytics.
+  </p>
+  <div class="contact-grid">
+    <div class="card" style="padding:1.5rem">
+      <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.8rem;">Get In Touch</h3>
+      <ul class="clist">
+        <li><a href="mailto:sethus4791@gmail.com"><span class="clist-icon">✉</span><div><div class="clist-type">Email</div><div class="clist-val">sethus4791@gmail.com</div></div></a></li>
+        <li><a href="https://www.linkedin.com/in/sethus4791" target="_blank"><span class="clist-icon">in</span><div><div class="clist-type">LinkedIn</div><div class="clist-val">linkedin.com/in/sethus4791</div></div></a></li>
+        <li><a href="https://github.com/itsmesethus" target="_blank"><span class="clist-icon">⌥</span><div><div class="clist-type">GitHub</div><div class="clist-val">github.com/itsmesethus</div></div></a></li>
+        <li><a href="https://www.kaggle.com/sethu123123" target="_blank"><span class="clist-icon">◈</span><div><div class="clist-type">Kaggle</div><div class="clist-val">kaggle.com/sethu123123</div></div></a></li>
+        <li><a href="https://www.coursera.org/learner/sethus4791" target="_blank"><span class="clist-icon">◉</span><div><div class="clist-type">Coursera</div><div class="clist-val">coursera.org/learner/sethus4791</div></div></a></li>
+        <li><a href="https://www.credly.com/users/sethu4791" target="_blank"><span class="clist-icon">◎</span><div><div class="clist-type">Credly</div><div class="clist-val">credly.com/users/sethu4791</div></div></a></li>
+      </ul>
+      <p class="c-loc">📍 Villupuram, Tamil Nadu-605103<br>☏ +91-8122815260</p>
+    </div>
+    <div class="resume-card">
+      <h3 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);">Resume</h3>
+      <p>Download my resume to learn more about my experience, skills, and achievements in data science and AI/ML engineering.</p>
+      <a class="dl-btn" href="resume/res.pdf" download="Sethu_S_Data_Scientist_resume.pdf">↓ &nbsp;Download Resume — Sethu S</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Sethu S &nbsp;·&nbsp; Data Science Portfolio &nbsp;·&nbsp; Built with HTML / CSS / JS</footer>
+</main>
+
+<!-- ═══════════════════ JAVASCRIPT ════════════════════════ -->
+<script>
+/* ── Colour palette ──────────────────────────────────────── */
+const C = {
+  blue:  '#38bdf8', green: '#34d399', violet:'#a78bfa',
+  orange:'#fb923c', red:  '#f87171', amber: '#fbbf24',
+  muted: '#8896b0'
+};
+
+/* ── Experience tags ─────────────────────────────────────── */
+function renderTags(id, items, color){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.innerHTML = items.map(t=>`<span class="tag" style="color:${color};border-color:${color}44;background:${color}0f">${t}</span>`).join('');
+}
+
+renderTags('tags-nielsen', [
+  'Python','PySpark','SQL','Machine Learning','Statistical Modeling','Predictive Analytics',
+  'DataBricks','AWS S3','Big Data Analytics','Distributed Data Processing',
+  'Data Pipeline Development','Audience Measurement Analytics','Data Validation & QA',
+  'Feature Engineering','Production Data Systems','Regulatory Audit (MRC)',
+  'Cross-Functional Collaboration','Production Code Optimization','Impact Analysis',
+  'Data Engineering Workflows','Statistical Inference','Technical Documentation'
+], C.green);
+
+renderTags('tags-evoscien', [
+  'Python','Jupyter Notebook','MS Excel','Data Wrangling','Data Visualization',
+  'Hypothesis Testing','Design of Experiments','Statistical Modelling',
+  'Pandas','NumPy','Seaborn','Matplotlib','SciPy','Statsmodels','Pingouin'
+], C.violet);
+
+renderTags('tags-msc', [
+  'Descriptive Statistics','Distribution Theory','Sampling Theory',
+  'Probability & Measure Theory','Real Analysis & Linear Algebra',
+  'Statistical Estimation Theory','Statistical Quality Control (SQC)',
+  'Multivariate Statistical Analysis','Operation Research','Econometrics',
+  'Statistical Inference','Programming in R','BioStatistics & Survival Analysis',
+  'Demography & Vital Statistics','Linear Models & Design of Experiments','Stochastic Processes'
+], C.blue);
+
+/* ── Skills — grouped ────────────────────────────────────── */
+const skillGroups = [
+  {
+    icon:'⌨️', title:'Programming Languages',color:C.blue,
+    items:['Python','R','SQL','PySpark']
+  },
+  {
+    icon:'🛠️', title:'Tools & Platforms', color:C.green,
+    items:['Microsoft Power BI','Jupyter Notebook','DataBricks','AWS S3',
+           'IBM SPSS','MINITAB','STATISTICA','Microsoft Excel','MYSQL']
+  },
+  {
+    icon:'📦', title:'Libraries & Frameworks', color:C.violet,
+    items:['Pandas','NumPy','Matplotlib','Seaborn','Plotly','SciPy',
+           'Scikit-Learn','TensorFlow','Keras','Statsmodels','Pingouin',
+           'Streamlit','FB-Prophet','OpenCV']
+  },
+  {
+    icon:'📊', title:'Data Science & Analytics', color:C.amber,
+    items:['Data Cleaning','Exploratory Data Analysis (EDA)','Data Mining',
+           'Feature Engineering','Feature Selection','Data Visualization',
+           'Outlier Detection','Correlation Analysis','A/B Testing',
+           'Ad Hoc Analysis','Model Evaluation','Model Deployment',
+           'Hyperparameter Tuning','Model Interpretation','Advanced Analytics']
+  },
+  {
+    icon:'📐', title:'Statistical Methods', color:C.orange,
+    items:['Statistical Modeling','Statistical Inference','Predictive Analytics',
+           'Hypothesis Testing','Design of Experiments','Sampling Theory',
+           'Multivariate Statistical Analysis','Time Series Analysis',
+           'Forecasting','Quantitative Analysis']
+  },
+  {
+    icon:'🤖', title:'Machine Learning & Deep Learning', color:C.red,
+    items:['Regression','Classification','Clustering','Predictive Modelling',
+           'Deep Learning','Neural Networks','CNN','RNN','LSTM','GRU',
+           'Bidirectional Models','Transfer Learning (VGG19)',
+           'Ensemble Methods','XGBoost','CatBoost','GradientBoost']
+  },
+  {
+    icon:'🏭', title:'Production & Data Engineering', color:'#22d3ee',
+    items:['Data Pipeline Development','Distributed Data Processing',
+           'Big Data Analytics','Production Data Systems',
+           'Data Engineering Workflows','Data Validation & QA',
+           'Audience Measurement Analytics','Weighting Methodology',
+           'Impact Analysis','Full Sample UAT',
+           'Regulatory Audit Support (MRC)','Production Code Optimization',
+           'Cross-Functional Collaboration','Technical Documentation']
+  }
+];
+
+const skillsWrap = document.getElementById('skills-container');
+skillGroups.forEach(g=>{
+  const tagsHtml = g.items.map(t=>
+    `<span class="tag" style="color:${g.color};border-color:${g.color}44;background:${g.color}0f">${t}</span>`
+  ).join('');
+  const div = document.createElement('div');
+  div.className = 'skill-group';
+  div.innerHTML = `
+    <div class="sg-header">
+      <span class="sg-icon">${g.icon}</span>
+      <span class="sg-title" style="color:${g.color}">${g.title}</span>
+      <div class="sg-rule"></div>
+    </div>
+    <div class="tags">${tagsHtml}</div>
+  `;
+  skillsWrap.appendChild(div);
+});
+
+/* ── Projects data — full rich descriptions ──────────────── */
+const projects = [
+  {
+    num:'01', color:C.blue,
+    title:'Chrono Power Forecast',
+    subtitle:'Electricity Demand Forecasting for UK Year-2024',
+    date:'Dec 2023 – Jan 2024',
+    image:'projects/time series/light.jpg',
+    github:'https://github.com/itsmesethus/CHRONO-POWER-FORECAST-ELECTRICITY-DEMAND-FORECASTING-FOR-UNITED-KINGDOM-FOR-THE-YEAR-2024-',
+    tools:['Python','Pandas','Matplotlib','Seaborn','Scikit-learn','Statsmodels','TensorFlow','NumPy','Keras','FB-Prophet'],
+    skills:['Data Preprocessing','Data Visualization','Statistical Modelling','Time Series Analysis','Forecasting','Deep Learning','Sequence Models','Machine Learning'],
+    bullets:[
+      'Time series analysis and forecasting are crucial tasks in domains such as energy systems, finance, meteorology, and supply chain management. Time series data consists of observations collected over time that exhibit patterns, trends, and seasonal components — and accurate forecasting enables informed decision-making, resource allocation, and proactive planning.',
+      'The objective of this project was to analyze historical electricity demand data from the National Grid Electricity System Operator (ESO) for Great Britain (2009–2023) and apply time series forecasting methods to predict National Demand (ND), Transmission System Demand (TSD), and England & Wales demand for the year 2024.',
+      'Part one focused on statistical models and the FB-Prophet model, including seasonal decomposition, ADF & KPSS tests for stationarity, ACF/PACF correlation plots, and forecasting with Simple Exponential Smoothing, Double Exponential Smoothing, Triple Exponential Smoothing (Holt-Winters), AutoRegressive (AR), Moving Average (MA), ARMA, SARIMA, and FB-Prophet.',
+      'Part two concentrated on deep learning sequence architectures: Recurrent Neural Networks (RNNs), Bidirectional RNNs, Long Short-Term Memory (LSTM), Bidirectional LSTMs (BiLSTM), Gated Recurrent Units (GRU), Bidirectional GRUs (BiGRU), and advanced hybrid models combining Convolutional Neural Networks (CNNs), LSTMs/GRUs, and Deep Neural Networks (DNNs).',
+      'All models were systematically evaluated using RMSE, MAE, and MAPE metrics. The project demonstrated that hybrid CNN+LSTM architectures consistently outperformed standalone statistical models in capturing complex seasonal patterns in long-term energy demand data.'
+    ],
+    dashboard:null, video:null
+  },
+  {
+    num:'02', color:C.green,
+    title:'Cognizant AI Virtual Internship',
+    subtitle:'Machine Learning for Gala Grocery Retail Pricing',
+    date:'Sep 2023 – Oct 2023',
+    image:'projects/cognizant/1.jpg',
+    github:'https://github.com/itsmesethus/COGNIZANT-ARTIFICIAL-INTELLIGENCE-VIRTUAL-INTERNSHIP-Machine-Learning-for-Gala-Grocery-Retail-',
+    tools:['Python','Pandas','Matplotlib','Seaborn','Scikit-learn','TensorFlow','NumPy','Keras','Power BI','Streamlit'],
+    skills:['Data Cleaning','Data Preprocessing','Data Visualization','Feature Engineering','Multivariate Statistical Analysis','A/B Testing','Deep Learning','Machine Learning','Ensemble Regressors','Model Deployment'],
+    bullets:[
+      'Gala Groceries, a renowned technology-led supermarket chain, partnered with Cognizant to leverage data analytics and machine learning for enhancing customer experience and optimizing business operations. This project showcases the work done to build predictive models and develop machine learning algorithms using Gala Groceries\' transactional data.',
+      'The project aimed to gain practical experience in data exploration, analysis, and modeling using Python, and to develop skills in framing business problems, creating strategic plans, and communicating findings. The primary objectives were to build predictive models by combining, transforming, and modeling multiple datasets, and to develop machine learning algorithms capable of making accurate predictions on stock percentage levels.',
+      'ML algorithms utilized include Adaptive Boosting Regressor, HistGradient Boosting Regressor, Bagging Regressor, Radius Neighbors Regressor, and Artificial Neural Networks (ANN). The dataset included timestamps, product IDs, categories, customer types, unit prices, quantities, totals, payment types, average stock percentages, and temperature readings.',
+      'The project followed a full data science workflow: data preprocessing, EDA, Feature Engineering, model building, and model evaluation. Insights were generated around customer behaviors, top-selling categories, peak sale timings, and the relationships between variables such as unit price, quantity, and total sales.',
+      'An interactive Power BI dashboard was developed to visualize the Gala Grocery Store\'s performance metrics, and a Streamlit web application was deployed to allow real-time stock percentage predictions using the best-performing model.'
+    ],
+    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiNTRmMzdlYWYtNTY1ZS00ODNlLThkYjgtMWQzYmFkYTdhZDc1IiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9',
+    video:'projects/cognizant/video app for gala.webm'
+  },
+  {
+    num:'03', color:C.red,
+    title:'BCG Data Science Virtual Internship',
+    subtitle:'Churn Predictive Modelling to Customer Retention',
+    date:'Aug 2023 – Sep 2023',
+    image:'projects/bcg/1.jpg',
+    github:'https://github.com/itsmesethus/BCG-DATA-SCIENCE-VIRTUAL-INTERNSHIP---CHURN-BUSTER-PREDICTIVE-MODELING-TO-CUSTOMER-RETENTION-',
+    tools:['Python','Pandas','Matplotlib','Seaborn','Scikit-learn','TensorFlow','NumPy','Keras','Power BI'],
+    skills:['Data Cleaning','Data Preprocessing','Data Visualization','Feature Transformation','Feature Engineering','Deep Learning','Model Evaluation','Machine Learning','Ensemble Classifiers'],
+    bullets:[
+      'In today\'s competitive business landscape, retaining customers is paramount for sustained growth and profitability. Customer churn — the loss of customers over a given period — poses a significant challenge for companies across various industries. This project leverages advanced analytics and predictive modeling techniques to uncover underlying patterns and factors contributing to customer churn at PowerCo, a major gas and power utility company.',
+      'The project aimed to analyze the provided customer data to understand behavior patterns, address data quality issues, and engineer relevant features that capture the underlying characteristics and relationships influencing churn. Comprehensive data quality assessment was conducted, addressing missing values, inconsistencies, and formatting issues.',
+      'Performed in-depth EDA including descriptive statistics, visualizations, and outlier detection. Feature transformation techniques such as Yeo-Johnson Method were applied alongside encoding and feature selection to enhance the predictive power of models.',
+      'Implemented and evaluated a diverse range of machine learning algorithms including ANN-Logistic Regression Model, CatBoost Classifier, XGBoost Classifier, GradientBoost Classifier, and KNeighbors Classifier. Utilized k-fold cross-validation techniques to assess model performance and mitigate overfitting.',
+      'Extracted actionable insights and recommendations targeting at-risk customer segments. Results showed that price sensitivity, particularly during peak off-peak hours, was the strongest predictor of churn, enabling BCG to recommend a targeted 20% discount strategy for the highest-risk customer cohort.',
+      'An interactive Power BI dashboard was developed to visualize churn patterns, customer segments, and key risk indicators across the PowerCo customer base.'
+    ],
+    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiZGJjNzM4NzUtZTVhOS00MWNhLWJjOTYtYzIxN2UyNTc4ZTBiIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9',
+    video:null
+  },
+  {
+    num:'04', color:C.amber,
+    title:'Quantium Data Analytics Virtual Internship',
+    subtitle:'Retail Store Performance Analysis And Insights',
+    date:'May 2023 – Jun 2023',
+    image:'projects/quantium/12.jpg',
+    github:'https://github.com/itsmesethus/QUANTIUM-DATA-ANALYTICS-VIRTUAL-INTERNSHIP-RETAIL-STORE-PERFORMANCE-ANALYSIS-AND-INSIGHTS-',
+    tools:['Python','Pandas','NumPy','Matplotlib','Seaborn','SciPy'],
+    skills:['Data Cleaning','Data Preprocessing','Data Visualization','Correlation Analysis','Multivariate Statistical Analysis','A/B Testing'],
+    bullets:[
+      'As a data analytics intern at Quantium, this project delved deep into the world of chips — a beloved snack category. The objective was to analyze a comprehensive sales dataset spanning 272 stores across a one-year period from July 2018 to June 2019 for a major Australian supermarket chain, in order to shape the strategic plan for the chip category in the upcoming half-year.',
+      'Data preprocessing included checking for missing data and inconsistencies, performing Z-score method outlier removal, and ensuring data quality, reliability, scalability, and completeness. Visualizations created included box plots, distribution plots, word clouds, bar plots, pie charts, and time-series line plots.',
+      'Analyzed trends and patterns related to premium customers, product categories, brand performance, and store sales. Conducted One-Way ANOVA tests to identify significant differences among premium customer segments, product quantities, and customer life stages.',
+      'Performed Pearson Correlation analysis to examine the relationship between control stores and trial stores (stores 77, 86, 88). Applied Independent t-tests to compare means between control stores and trial stores for various performance measures including total sales, customer count, and transactions per customer.',
+      'Compared the performance of control and trial stores, providing clear recommendations for strategic initiatives. Identified top-performing brands (Kettle, Smiths, Pringles), best-selling products, and key customer segments — with Mainstream Young Singles/Couples and Budget Older Families being the highest-value groups.'
+    ],
+    dashboard:null, video:null
+  },
+  {
+    num:'05', color:C.violet,
+    title:'IMDB Movie BI Dashboard',
+    subtitle:'Performance Analysis And Insights',
+    date:'Jun 2023 – Jul 2023',
+    image:'projects/imdb/1.jpg',
+    github:'https://github.com/itsmesethus/IMDB-MOVIE-POWER_BI-DASHBOARD-',
+    tools:['Python','Pandas','NumPy','Power BI'],
+    skills:['Data Cleaning','Data Preprocessing','Data Visualization'],
+    bullets:[
+      'In the entertainment industry, movies play a significant role in shaping popular culture and driving box office success. Understanding the factors that contribute to a movie\'s performance is crucial for filmmakers, studios, and audiences. This project analyzes a comprehensive IMDb dataset to provide valuable insights into the characteristics and performance of popular movies.',
+      'The project began by acquiring the IMDb movie dataset, which contains a wealth of information including ratings, revenues, genres, cast, crew members, Metascores, runtimes, and vote counts. Data cleaning involved removing inconsistencies, handling missing values, and ensuring data integrity for accurate visualization.',
+      'Key analyses conducted: identifying the top movies based on vote count and IMDb rating; calculating average metrics such as Metascore, number of votes, duration, and revenue; listing the most popular actors and directors based on appearance frequency and average performance.',
+      'Genre-level analysis was performed to identify which genres generate the highest revenue and receive the best critical reception (Metascore). Temporal trend analysis tracked how movie durations, revenues, and ratings evolved across decades.',
+      'The interactive Power BI dashboard incorporates slicers, drill-throughs, and dynamic visualizations allowing users to explore the dataset intuitively. Key dashboard features include: Top 10 Movies by Votes, Genre Revenue Comparison, Director Performance Matrix, Actor Popularity Rankings, and Metascore vs Revenue Scatter Analysis.'
+    ],
+    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiOGFiZjdlOTItZjZjMS00YzY1LWEwNzItNjNhMWQ3NzdhMDBlIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9',
+    video:null
+  },
+  {
+    num:'06', color:'#34d399',
+    title:'Multiclass Disease Classification',
+    subtitle:'Medical Image Data Using Convolutional Neural Networks',
+    date:'Jan 2023 – Apr 2023',
+    image:'projects/multi diseaase/1.jpg',
+    github:'https://github.com/itsmesethus/MULTICLASS-DISEASE-CLASSIFICATION-OF-MEDICAL-IMAGE-DATA-USING-CONVOLUTIONAL-NEURAL-NETWORK-',
+    tools:['Python','Pandas','NumPy','Matplotlib','Seaborn','Scikit-learn','TensorFlow','Keras','OpenCV','Pathlib'],
+    skills:['Image Preprocessing','Data Visualization','Feature Engineering','Deep Learning','CNNs','Transfer Learning (VGG19)','Model Evaluation'],
+    bullets:[
+      'Accurate disease diagnosis from medical images is critical in healthcare and agriculture. This project leverages Convolutional Neural Networks (CNNs) to develop robust classification models capable of identifying various diseases across multiple domains including human health, plant pathology, and gastrointestinal radiology.',
+      'The project covered four distinct classification tasks: (1) Binary Classification — Pneumonia vs Normal chest X-rays, (2) 3-Class — Potato Plant Leaf Disease (Early Blight, Late Blight, Healthy), (3) 4-Class — Corn Plant Leaf Disease (Common Rust, Gray Leaf Spot, Blight, Healthy), (4) 8-Class — GastroIntestinal Diseases in Humans using the Kvasir dataset.',
+      'Image preprocessing pipeline included loading datasets, resizing images to appropriate dimensions (224×224 for VGG19), and splitting data into 70% training, 15% validation, and 15% test sets. Data augmentation techniques applied include random horizontal and vertical flips, random zooming, rotation, and image normalization.',
+      'CNN architectures were built using TensorFlow and Keras Sequential APIs. Network architectures incorporated multiple convolutional layers for hierarchical feature extraction, max-pooling layers for spatial dimensionality reduction, flatten layers, fully connected dense layers, and appropriate activation functions (ReLU for hidden layers, Softmax for output). Dropout regularization was applied to prevent overfitting.',
+      'For the 8-Class GastroIntestinal Disease classification task, transfer learning was applied using the pre-trained VGG19 model with ImageNet weights. The base layers were frozen initially, followed by fine-tuning of the top layers on the target medical dataset. This approach significantly improved accuracy on the complex 8-class medical imaging task.',
+      'All models were evaluated using accuracy, F1 score (macro and weighted), precision, and recall metrics. Confusion matrices and ROC curves were generated for comprehensive performance analysis. The CNN+VGG19 hybrid model achieved the highest F1 score on the GastroIntestinal task, demonstrating the effectiveness of transfer learning for specialized medical image classification.'
+    ],
+    dashboard:null, video:null
+  }
+];
+
+/* ── Render projects ─────────────────────────────────────── */
+const projCont = document.getElementById('projects-container');
+
+projects.forEach(p=>{
+  const bulletsHtml = p.bullets.map(b=>`<li>${b}</li>`).join('');
+  const toolsHtml   = p.tools.map(t=>`<span class="tag" style="color:${p.color};border-color:${p.color}44;background:${p.color}0f">${t}</span>`).join('');
+  const skillsHtml  = p.skills.map(s=>`<span class="tag" style="color:${C.muted};border-color:${C.muted}44;background:${C.muted}0f">${s}</span>`).join('');
+  const dashHtml    = p.dashboard ? `
+    <div class="sub-label" style="border-color:${p.color};color:${p.color}">Power BI Dashboard</div>
+    <div class="pbi-wrap"><iframe src="${p.dashboard}" style="width:100%;height:620px;border:none;" allowfullscreen loading="lazy" title="${p.title} Dashboard"></iframe></div>` : '';
+  const vidHtml     = p.video ? `
+    <div class="sub-label" style="border-color:${p.color};color:${p.color}">App Demo</div>
+    <video controls style="width:100%;border-radius:5px;margin-top:0.5rem;border:1px solid var(--border)">
+      <source src="${p.video}" type="video/webm"/></video>` : '';
+
+  const card = document.createElement('div');
+  card.className = 'proj-card';
+  card.innerHTML = `
+    <div class="proj-header">
+      <span class="proj-num">${p.num}</span>
+      <div class="proj-bar" style="background:${p.color}55"></div>
+      <span class="proj-title">${p.title}</span>
+    </div>
+    <p class="proj-sub">${p.subtitle}</p>
+    <div class="meta-row">
+      <span class="meta-l">Self Project</span>
+      <span class="meta-r" style="color:${p.color}">${p.date}</span>
+    </div>
+    <img class="proj-img" src="${p.image}" alt="${p.title}" loading="lazy"/>
+    <button class="toggle-btn" onclick="toggleProj(this)">
+      <span class="proj-arrow">▶</span>&nbsp; Read More
+    </button>
+    <div class="proj-details">
+      <div class="sub-label" style="border-color:${p.color};color:${p.color}">Description</div>
+      <ul class="blist">${bulletsHtml}</ul>
+      ${dashHtml}
+      ${vidHtml}
+      <a class="gh-btn" href="${p.github}" target="_blank">↗ &nbsp;View on GitHub</a>
+    </div>
+    <div class="thin-hr"></div>
+    <div class="ts-lbl">Tools</div>
+    <div class="tags">${toolsHtml}</div>
+    <div class="ts-lbl">Skills Applied</div>
+    <div class="tags">${skillsHtml}</div>
+  `;
+  projCont.appendChild(card);
+});
+
+function toggleProj(btn){
+  const details = btn.nextElementSibling;
+  const open = details.classList.toggle('open');
+  const arrow = btn.querySelector('.proj-arrow');
+  arrow.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+  btn.innerHTML = `<span class="proj-arrow" style="transition:transform 0.25s;display:inline-block;transform:${open?'rotate(90deg)':'rotate(0deg)'}">▶</span>&nbsp; ${open ? 'Show Less' : 'Read More'}`;
+}
+
+/* ── Certifications — row by row order (1,2,3,4 → 1.1,2.1,3.1,4.1…) ── */
+const certRows = [
+  ['1','2','3','4'],
+  ['1.1','2.1','3.1','4.1'],
+  ['1.2','2.2','3.2','4.2'],
+  ['1.3','2.3','3.3','4.3'],
+  ['1.4','2.4','3.4','4.4'],
+  ['1.5','2.5','3.5','4.5'],
+  ['1.6','2.6','3.6','4.6'],
+  ['1.7','2.7','3.7','4.7'],
+  ['4.8',  '4.9', '',   ''],
+];
+
+// flatten row-by-row, skip empty
+const certOrdered = certRows.flat().filter(x=>x!=='');
+const certGrid = document.getElementById('cert-grid');
+certOrdered.forEach(f=>{
+  const img = document.createElement('img');
+  img.src = `img certifi/${f}.jpg`;
+  img.alt = `Certificate ${f}`;
+  img.loading = 'lazy';
+  certGrid.appendChild(img);
+});
+
+/* ── Active nav on scroll ────────────────────────────────── */
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('section[id]');
+
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const a = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(a) a.classList.add('active');
+    }
+  });
+},{threshold:0.2, rootMargin:'-50px 0px -55% 0px'});
+
+sections.forEach(s=>obs.observe(s));
+
+/* ── Mobile sidebar close on nav click ──────────────────── */
+navLinks.forEach(l=>l.addEventListener('click',()=>{
+  document.getElementById('sidebar').classList.remove('open');
+}));
+</script>
+</body>
+</html>
