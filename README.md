@@ -62,7 +62,7 @@ Branch: `main` | Folder: `/ (root)` → **Save**
 
 ### Step 4 — Wait ~60 seconds
 GitHub will build and deploy. You'll see a green banner:  
-**"Your site is live at https://itsmesethus.github.io"**
+**"Your site is live at [https://itsmesethus.github.io](https://itsmesethus.github.io/github-porfolio)"**
 
 ### Step 5 — Visit your site
 Open `https://itsmesethus.github.io` in your browser 🎉
